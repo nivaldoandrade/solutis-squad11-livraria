@@ -1,9 +1,18 @@
 package entities;
 
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Venda {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @ManyToMany
     private Livro[] livros;
 
     private static int numVendas = 0;
@@ -18,6 +27,10 @@ public class Venda {
         this.cliente = cliente;
         this.livros = new Livro[qtdLivros];
         numVendas++;
+    }
+
+    public Venda() {
+
     }
 
     public static int getNumVendas() {

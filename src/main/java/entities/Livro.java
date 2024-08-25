@@ -1,8 +1,18 @@
 package entities;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 import java.util.Objects;
 
+@Entity
 public abstract class Livro {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
     private String titulo;
 
     private String autore;
@@ -16,6 +26,10 @@ public abstract class Livro {
         this.autore = autore;
         this.editora = editora;
         this.preco = preco;
+    }
+
+    public Livro() {
+
     }
 
     public String getTitulo() {

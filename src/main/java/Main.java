@@ -1,9 +1,16 @@
+import entities.Impresso;
+import entities.Livro;
 import utils.Prompts;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
+        // SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        // Session session = sessionFactory.openSession();
+
+
         System.out.println("========= LIVRARIA =========");
         Scanner scanner = new Scanner(System.in);
 

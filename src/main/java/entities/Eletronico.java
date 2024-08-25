@@ -1,14 +1,28 @@
 package entities;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 import java.util.Objects;
 
+@Entity
 public class Eletronico extends Livro {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     private int tamanho;
 
     public Eletronico(String titulo, String autore, String editora, float preco, int tamanho) {
         super(titulo, autore, editora, preco);
         this.tamanho = tamanho;
+    }
+
+    public Eletronico() {
+
     }
 
     public int getTamanho() {
