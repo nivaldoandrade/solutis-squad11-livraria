@@ -14,7 +14,9 @@ public class LivrariaVirtual {
     private static final int MAX_ELETRONICOS = 20;
     private static final int MAX_VENDAS = 50;
 
-    private final List<Impresso> impressos = List.of(
+    public Database db = new Database();
+
+    public final List<Impresso> impressos = List.of(
             new Impresso("O Sol é Para Todos", "Harper Lee", "J.P. Editores", 34.90f, 7.50f, 150),
             new Impresso("A Menina que Roubava Livros", "Markus Zusak", "Intrínseca", 39.90f, 6.00f, 200),
             new Impresso("Os Miseráveis", "Victor Hugo", "Martin Claret", 49.90f, 8.00f, 120),
@@ -23,11 +25,11 @@ public class LivrariaVirtual {
             new Impresso("Um Estranho em Casa", "Tana French", "HarperCollins", 44.90f, 7.00f, 110),
             new Impresso("O Caso dos 10 Negrinhos", "Agatha Christie", "Record", 31.90f, 6.50f, 95),
             new Impresso("O Código Da Vinci", "Dan Brown", "Suma de Letras", 54.90f, 10.00f, 0),
-            new Impresso("A Garota no Trem", "Paula Hawkins", "Editora Planeta", 39.90f, 6.00f, 140),
-            new Impresso("A Morte de Ivan Ilitch", "Leon Tolstói", "L&PM Pocket", 22.90f, 5.50f, 100)
+            new Impresso("A Garota no Trem", "Paula Hawkins", "Editora Planeta", 39.90f, 6.00f, 140)
+            //new Impresso("A Morte de Ivan Ilitch", "Leon Tolstói", "L&PM Pocket", 22.90f, 5.50f, 100)
     );
 
-    private final List<Eletronico> eletronicos = List.of(
+    public final List<Eletronico> eletronicos = List.of(
             new Eletronico("O Senhor dos Anéis", "J.R.R. Tolkien", "HarperCollins", 59.99f, 1024),
             new Eletronico("1984", "George Orwell", "Companhia das Letras", 39.99f, 512),
             new Eletronico("O Hobbit", "J.R.R. Tolkien", "HarperCollins", 29.99f, 2048),
@@ -39,7 +41,8 @@ public class LivrariaVirtual {
             new Eletronico("O Primo Basílio", "José de Alencar", "Martin Claret", 20.99f, 256),
             new Eletronico("Iracema", "José de Alencar", "Companhia das Letras", 30.99f, 128)
     );
-    private List<Venda> vendas = new ArrayList<>();
+
+    public List<Venda> vendas = new ArrayList<>();
 
     private int numImpressos;
     private int numEletronicos;
@@ -51,27 +54,28 @@ public class LivrariaVirtual {
 
         int opcaoTipoLivro = selecionarTipoDeLivro(scanner);
 
-        Livro livro = null;
-        Livro livro1 = null;
+        Livro impresso = null;
+        Livro eletronico = null;
 
         switch (opcaoTipoLivro) {
             case 1:
-                livro = criarLivroImpresso(scanner);
+                impresso = criarLivroImpresso(scanner);
                 break;
             case 2:
-                livro = criarLivroEletronico(scanner);
+                eletronico = criarLivroEletronico(scanner);
                 break;
             case 3:
-                livro = criarLivroImpresso(scanner);
-                livro1 = criarLivroEletronico(scanner);
-
+                impresso = criarLivroImpresso(scanner);
+                eletronico = criarLivroEletronico(scanner);
         }
 
-        if(livro != null) {
-            System.out.println(livro.toString());
+        if(impresso != null) {
+            db.salvarLivro(impresso);
+            System.out.println(impresso.toString());
         }
-        if(livro1 != null) {
-         System.out.println(livro1.toString());
+        if(eletronico != null) {
+            db.salvarLivro(eletronico);
+         System.out.println(eletronico.toString());
         }
     }
 
@@ -93,7 +97,7 @@ public class LivrariaVirtual {
         for(Livro livro : livros) {
             venda.addLivro(livro, index++);
 
-            if(livro instanceof  Impresso) {
+            if(livro instanceof Impresso) {
                 venda.incrementarValor(livro.getPreco() + ((Impresso) livro).getFrete());
                 continue;
             }
@@ -163,7 +167,7 @@ public class LivrariaVirtual {
 
         for(int i = 1; i <= qtdLivros; i++) {
             System.out.println();
-            System.out.printf("====== Escolhendo o tipo do entities.Livro %d ======%n", i);
+            System.out.printf("====== Escolhendo o tipo do Livro %d ======%n", i);
             int opcaoTipoLivro = obterTipoLivro(scanner);
             Livro livroEscolhido = selecionarLivro(scanner, opcaoTipoLivro);
             livros.add(livroEscolhido);
@@ -174,7 +178,7 @@ public class LivrariaVirtual {
 
     private int obterTipoLivro(Scanner scanner) {
         String promptInfo = "Tipos de livros: \n" +
-                "1 - entities.Impresso; \n" +
+                "1 - Impresso: \n" +
                 "2 - Eletrônico: ";
         String promptTipoLivro = "Conforme a lista acima, digite o tipo do livro: ";
         return Prompts.promptOpcaoComNumero(scanner, promptInfo, promptTipoLivro, 1, 2);
@@ -217,11 +221,11 @@ public class LivrariaVirtual {
     }
 
     private int selecionarTipoDeLivro(Scanner scanner) {
-        String promptInfo = "Tipos de livros: \n" +
-                "1 - entities.Impresso; \n" +
+        String promptInfo = "Tipos de livros: \n\n" +
+                "1 - Impresso; \n" +
                 "2 - Eletrônico; \n" +
-                "3 - entities.Impresso e Eletrônico.";
-        String promptOpcao = "Qual tipo de livro que será cadastrado: ";
+                "3 - Impresso e Eletrônico.";
+        String promptOpcao = "\nQual tipo de livro que será cadastrado: ";
         return Prompts.promptOpcaoComNumero(scanner, promptInfo, promptOpcao, 1, 3);
     };
 

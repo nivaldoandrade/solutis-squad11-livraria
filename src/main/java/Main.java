@@ -1,23 +1,14 @@
-import entities.Impresso;
-import entities.Livro;
 import utils.Prompts;
-
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
-        // SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        // Session session = sessionFactory.openSession();
-
-
-        System.out.println("========= LIVRARIA =========");
         Scanner scanner = new Scanner(System.in);
-
         LivrariaVirtual livrariaVirtual = new LivrariaVirtual();
+        System.out.println("========= LIVRARIA =========");
 
         while (true) {
-            int opcaoLivraria = escolherOcaoLivraria(scanner);
+            int opcaoLivraria = escolherOpcaoLivraria(scanner);
 
             switch (opcaoLivraria) {
                 case 1:
@@ -44,14 +35,14 @@ public class Main {
 
     }
 
-    private static int escolherOcaoLivraria(Scanner scanner) {
-        String promptInfo = "Opção da livraria: \n" +
+    private static int escolherOpcaoLivraria(Scanner scanner) {
+        String promptInfo = "Opção da livraria: \n\n" +
                 "1 - Cadastrar livro; \n" +
                 "2 - Realizar venda; \n" +
                 "3 - Listar livros; \n" +
                 "4 - Listar vendas.";
 
-        String promptOpcao = "Escolha a sua opção entre 1-4: ";
+        String promptOpcao = "\nEscolha a sua opção entre 1-4: ";
 
         return Prompts.promptOpcaoComNumero(scanner,promptInfo, promptOpcao, 1, 4);
     }
@@ -60,13 +51,13 @@ public class Main {
         char opcao;
 
         while(true) {
-            System.out.print("Deseja sair do sistema? (s ou n): ");
+            System.out.print("\nDeseja sair do sistema? (s ou n): ");
             opcao = Character.toLowerCase(scanner.next().charAt(0)) ;
 
             if( opcao == 'n' || opcao == 's') {
                 break;
             }
-            System.out.print("Selecione S para sair ou N para continuar! ");
+            System.out.print("\nSelecione S para sair ou N para continuar! ");
         }
         return opcao;
     }
