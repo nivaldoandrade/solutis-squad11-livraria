@@ -14,6 +14,12 @@ public class Impresso extends Livro {
         this.estoque = estoque;
     }
 
+    public Impresso(int id, String titulo, String autore, String editora, float preco, float frete, int estoque) {
+        super(id, titulo, autore, editora, preco);
+        this.frete = frete;
+        this.estoque = estoque;
+    }
+
     public float getFrete() {
         return frete;
     }
