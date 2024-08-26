@@ -29,7 +29,7 @@ public class LivrariaVirtual {
 
 
         while (true) {
-            int opcaoLivraria = escolherOcaoLivraria(scanner);
+            int opcaoLivraria = escolherOpcaoLivraria(scanner);
 
             switch (opcaoLivraria) {
                 case 1:
@@ -57,7 +57,7 @@ public class LivrariaVirtual {
         DB.closeConnection();
     }
 
-    private static int escolherOcaoLivraria(Scanner scanner) {
+    private static int escolherOpcaoLivraria(Scanner scanner) {
         String promptInfo = "Opção da livraria: \n" +
                 "1 - Cadastrar livro; \n" +
                 "2 - Realizar venda; \n" +

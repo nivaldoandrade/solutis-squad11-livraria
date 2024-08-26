@@ -8,14 +8,14 @@ public class Impresso extends Livro {
 
     private int estoque;
 
-    public Impresso(String titulo, String autore, String editora, float preco, float frete, int estoque) {
-        super(titulo, autore, editora, preco);
+    public Impresso(String titulo, String autores, String editora, float preco, float frete, int estoque) {
+        super(titulo, autores, editora, preco);
         this.frete = frete;
         this.estoque = estoque;
     }
 
-    public Impresso(int id, String titulo, String autore, String editora, float preco, float frete, int estoque) {
-        super(id, titulo, autore, editora, preco);
+    public Impresso(int id, String titulo, String autores, String editora, float preco, float frete, int estoque) {
+        super(id, titulo, autores, editora, preco);
         this.frete = frete;
         this.estoque = estoque;
     }

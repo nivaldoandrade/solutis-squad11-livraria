@@ -269,7 +269,7 @@ public class LivroDaoJDBC implements LivroDao {
             );
 
             pst.setString(1, livro.getTitulo());
-            pst.setString(2, livro.getAutore());
+            pst.setString(2, livro.getAutores());
             pst.setString(3, livro.getEditora());
             pst.setFloat(4, livro.getPreco());
 

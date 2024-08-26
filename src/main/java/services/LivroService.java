@@ -16,20 +16,8 @@ public class LivroService {
 
     private final LivroDao livroDao;
 
-//    private final List<Impresso> impressos;
-//
-//    private final List<Eletronico> eletronicos;
-
-//    private int numImpressos;
-//
-//    private int numEletronicos;
-
     public LivroService(LivroDao livroDao) {
         this.livroDao = livroDao;
-//        this.impressos = livroDao.listarImpressos();
-//        this.eletronicos = livroDao.listarEletronico();
-//        this.numImpressos = livroDao.totalImpressos();
-//        this.numEletronicos = livroDao.totalEletronico();
     }
 
     public void cadastrarLivro(Scanner scanner) {
@@ -56,11 +44,9 @@ public class LivroService {
 
         if(impresso != null) {
             livroDao.cadastrar(impresso);
-//            impressos.add(impresso);
         }
         if(eletronico != null) {
             livroDao.cadastrar(eletronico);
-//            eletronicos.add(eletronico);
         }
 
         System.out.println("\n====== Livro(s) cadastrados com sucesso! ======\n");
@@ -148,8 +134,6 @@ public class LivroService {
         String promptEstoque = "Digite a quantidade de livros em estoque: ";
         int estoque = Prompts.promptInt(scanner, promptEstoque);
 
-//        numImpressos += 1;
-
         return new Impresso(
                 livroPadrao.titulo(),
                 livroPadrao.autor(),
@@ -171,8 +155,6 @@ public class LivroService {
 
         String promptTamanho = "Digite o tamanho(KB) do livro: ";
         int tamanho = Prompts.promptInt(scanner, promptTamanho);
-
-//        numEletronicos += 1;
 
         return new Eletronico(
                 livroPadrao.titulo(),

@@ -35,7 +35,7 @@ public class VendaService {
     public void realizarVenda(Scanner scanner) {
         System.out.println();
         if(!podeVender()) {
-            System.out.println("Não é possivel vender livro! O limite máximo foi atingido");
+            System.out.println("Não é possivel vender o livro! O limite máximo foi atingido.");
             return;
         }
         System.out.println();
@@ -85,7 +85,7 @@ public class VendaService {
 
         for(int i = 1; i <= qtdLivros; i++) {
             System.out.println();
-            System.out.printf("====== Escolhendo o tipo do entities.Livro %d ======%n", i);
+            System.out.printf("====== Escolhendo o tipo do Livro %d ======%n", i);
             int opcaoTipoLivro = obterTipoLivro(scanner);
             Livro livroEscolhido = selecionarLivro(scanner, opcaoTipoLivro);
             livros.add(livroEscolhido);

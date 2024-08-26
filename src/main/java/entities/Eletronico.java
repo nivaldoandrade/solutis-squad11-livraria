@@ -6,13 +6,13 @@ public class Eletronico extends Livro {
 
     private int tamanho;
 
-    public Eletronico(String titulo, String autore, String editora, float preco, int tamanho) {
-        super(titulo, autore, editora, preco);
+    public Eletronico(String titulo, String autores, String editora, float preco, int tamanho) {
+        super(titulo, autores, editora, preco);
         this.tamanho = tamanho;
     }
 
-    public Eletronico(int id, String titulo, String autore, String editora, float preco, int tamanho) {
-        super(id, titulo, autore, editora, preco);
+    public Eletronico(int id, String titulo, String autores, String editora, float preco, int tamanho) {
+        super(id, titulo, autores, editora, preco);
         this.tamanho = tamanho;
     }
 

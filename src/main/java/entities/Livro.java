@@ -7,23 +7,23 @@ public abstract class Livro {
 
     private String titulo;
 
-    private String autore;
+    private String autores;
 
     private String editora;
 
     private float preco;
 
-    public Livro(String titulo, String autore, String editora, float preco) {
+    public Livro(String titulo, String autores, String editora, float preco) {
         this.titulo = titulo;
-        this.autore = autore;
+        this.autores = autores;
         this.editora = editora;
         this.preco = preco;
     }
 
-    public Livro(int id, String titulo, String autore, String editora, float preco) {
+    public Livro(int id, String titulo, String autores, String editora, float preco) {
         this.id = id;
         this.titulo = titulo;
-        this.autore = autore;
+        this.autores = autores;
         this.editora = editora;
         this.preco = preco;
     }
@@ -44,12 +44,12 @@ public abstract class Livro {
         this.titulo = titulo;
     }
 
-    public String getAutore() {
-        return autore;
+    public String getAutores() {
+        return autores;
     }
 
-    public void setAutore(String autore) {
-        this.autore = autore;
+    public void setAutores(String autore) {
+        this.autores = autore;
     }
 
     public String getEditora() {
@@ -76,7 +76,7 @@ public abstract class Livro {
                 "Autor: %s%n" +
                 "Editor: %s%n" +
                 "Preço: %.2f%n",
-                id, titulo, autore,editora, preco
+                id, titulo, autores,editora, preco
         );
     }
 
@@ -85,11 +85,11 @@ public abstract class Livro {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Livro livro = (Livro) o;
-        return Float.compare(preco, livro.preco) == 0 && Objects.equals(titulo, livro.titulo) && Objects.equals(autore, livro.autore) && Objects.equals(editora, livro.editora);
+        return Float.compare(preco, livro.preco) == 0 && Objects.equals(titulo, livro.titulo) && Objects.equals(autores, livro.autores) && Objects.equals(editora, livro.editora);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(titulo, autore, editora, preco);
+        return Objects.hash(titulo, autores, editora, preco);
     }
 }
