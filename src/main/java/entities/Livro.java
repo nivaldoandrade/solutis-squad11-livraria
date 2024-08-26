@@ -3,6 +3,8 @@ package entities;
 import java.util.Objects;
 
 public abstract class Livro {
+    private int id;
+
     private String titulo;
 
     private String autore;
@@ -16,6 +18,22 @@ public abstract class Livro {
         this.autore = autore;
         this.editora = editora;
         this.preco = preco;
+    }
+
+    public Livro(int id, String titulo, String autore, String editora, float preco) {
+        this.id = id;
+        this.titulo = titulo;
+        this.autore = autore;
+        this.editora = editora;
+        this.preco = preco;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitulo() {
@@ -53,11 +71,12 @@ public abstract class Livro {
     @Override
     public String toString() {
         return String.format(
+                "Id: %d%n" +
                 "Título: %s%n" +
                 "Autor: %s%n" +
                 "Editor: %s%n" +
                 "Preço: %.2f%n",
-                titulo, autore,editora, preco
+                id, titulo, autore,editora, preco
         );
     }
 

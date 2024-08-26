@@ -4,24 +4,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Venda {
-    private Livro[] livros;
+    private int id;
+
+    private List<Livro> livros = new ArrayList<>();
 
     private static int numVendas = 0;
 
-    private int numero = numVendas;
+    private int numero;
 
     private String cliente;
 
     private float valor = 0F;
 
+    public Venda(int numero, String cliente, float valor) {
+        this.numero = numero;
+        this.cliente = cliente;
+        this.valor = valor;
+    }
+
     public Venda(String cliente, int qtdLivros) {
         this.cliente = cliente;
-        this.livros = new Livro[qtdLivros];
         numVendas++;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public List<Livro> getLivros() {
+
+        return livros;
+    }
+
+    public static void setNumVendas(int numVendas) {
+        Venda.numVendas = numVendas;
     }
 
     public static int getNumVendas() {
         return numVendas;
+
+
     }
 
     public int getNumero() {
@@ -42,9 +64,10 @@ public class Venda {
         this.valor += valor;
     }
 
-    public void addLivro(Livro livro, int index) {
-        livros[index] = livro;
+    public void addLivro(Livro livro) {
+        livros.add(livro);
     }
+
 
     public void listarLivros() {
         System.out.println();
@@ -70,7 +93,7 @@ public class Venda {
             imprimirListaPorTipo(eletronicos);
         }
 
-        System.out.printf("Quantidade de livros vendidos: %d%n", livros.length);
+        System.out.printf("Quantidade de livros vendidos: %d%n", livros.size());
         System.out.printf("Valor total da venda: %.2f%n", valor);
     }
 

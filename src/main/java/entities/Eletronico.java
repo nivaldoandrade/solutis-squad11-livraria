@@ -11,6 +11,11 @@ public class Eletronico extends Livro {
         this.tamanho = tamanho;
     }
 
+    public Eletronico(int id, String titulo, String autore, String editora, float preco, int tamanho) {
+        super(id, titulo, autore, editora, preco);
+        this.tamanho = tamanho;
+    }
+
     public int getTamanho() {
         return tamanho;
     }
