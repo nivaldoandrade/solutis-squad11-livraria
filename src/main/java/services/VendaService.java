@@ -6,20 +6,21 @@ import entities.Eletronico;
 import entities.Impresso;
 import entities.Livro;
 import entities.Venda;
-import utils.Prompts;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
+import static utils.Prompts.*;
+
 public class VendaService {
     private static final int MAX_VENDAS = 50;
-    private VendaDao vendaDao;
+    private final VendaDao vendaDao;
 
-    private LivroDao livroDao;
+    private final LivroDao livroDao;
 
-    private LivroService livroService;
+    private final LivroService livroService;
 
     private int numVendas;
 
@@ -33,7 +34,6 @@ public class VendaService {
     }
 
     public void realizarVenda(Scanner scanner) {
-        System.out.println();
         if(!podeVender()) {
             System.out.println("Não é possivel vender o livro! O limite máximo foi atingido.");
             return;
@@ -42,20 +42,30 @@ public class VendaService {
         System.out.println("====== VENDER LIVROS ======");
 
         String promptCliente = "Digite o nome do cliente: ";
-        String cliente = Prompts.promptNameInput(scanner, promptCliente);
+        String cliente = promptNameInput(scanner, promptCliente);
 
         String promptQtdLivros = "Digite a quantidade de livros que deseja comprar: ";
-        int qtdLivros = Prompts.promptInt(scanner, promptQtdLivros);
+        int qtdLivros = promptInt(scanner, promptQtdLivros);
 
         Venda venda = new Venda(cliente, qtdLivros);
 
         List<Livro> livros = selecionarLivrosAVenda(scanner, qtdLivros);
 
+        String promptOpcaoCadastrar = "Confirmar a comprar: (s ou n): ";
+        char opcaoCadastrar = promptParaContinuar(scanner, promptOpcaoCadastrar);
+
+        if(opcaoCadastrar == 'n') {
+            System.out.println("\n====== Compra cancelada ======\n");
+            return;
+        }
+
         for(Livro livro : livros) {
             venda.addLivro(livro);
 
             if(livro instanceof Impresso) {
-                venda.incrementarValor(livro.getPreco() + ((Impresso) livro).getFrete());
+                Impresso impresso = (Impresso) livro;
+                venda.incrementarValor(livro.getPreco() + impresso.getFrete());
+                livroDao.atualizarEstoque(impresso);
                 continue;
             }
 
@@ -68,16 +78,31 @@ public class VendaService {
         venda.listarLivros();
     }
 
-    public void listarVendas() {
-        System.out.println();
-        System.out.println("====== LISTAR VENDAS ======");
-        System.out.println("Total de vendas: " + Venda.getNumVendas());
 
-        List<Venda> ve = vendaDao.listar();
 
-        for(Venda venda : ve) {
-            venda.listarLivros();
+    public void listarVendas(Scanner scanner) {
+        char continuar;
+
+        while (true) {
+            System.out.println();
+            System.out.println("====== LISTAR VENDAS ======");
+            System.out.println("Total de vendas: " + Venda.getNumVendas());
+
+            List<Venda> vendas = vendaDao.listar();
+
+            for(Venda venda : vendas) {
+                venda.listarLivros();
+            }
+
+            String promptContinuar = "Deseja listar novamente as vendas? (s ou n): ";
+            continuar = promptParaContinuar(scanner, promptContinuar);
+
+            if( continuar == 'n') {
+                System.out.println();
+                break;
+            }
         }
+
     }
 
     private List<Livro> selecionarLivrosAVenda(Scanner scanner, int qtdLivros) {
@@ -99,7 +124,7 @@ public class VendaService {
                 "1 - Impresso; \n" +
                 "2 - Eletrônico: ";
         String promptTipoLivro = "Conforme a lista acima, digite o tipo do livro: ";
-        return Prompts.promptOpcaoComNumero(scanner, promptInfo, promptTipoLivro, 1, 2);
+        return promptOpcaoComNumero(scanner, promptInfo, promptTipoLivro, 1, 2);
     }
 
     private Livro selecionarLivro(Scanner scanner, int tipoLivro) {
@@ -115,7 +140,7 @@ public class VendaService {
     private Impresso escolherLivroImpresso(Scanner scanner) {
         while (true) {
             String promptLivroId = "Digite o número do livro da lista: ";
-            int livroId = Prompts.promptInt(scanner, promptLivroId);
+            int livroId = promptInt(scanner, promptLivroId);
 
             Optional<Impresso> livroSelecionado = livroDao.buscarLivroImpressoPorId(livroId);
 
@@ -129,7 +154,6 @@ public class VendaService {
                 continue;
             }
 
-            livroDao.atualizarEstoque(livroSelecionado.get());
 
             return livroSelecionado.get();
         }
@@ -138,7 +162,7 @@ public class VendaService {
     private Eletronico escolherLivroEletronico(Scanner scanner) {
         while (true) {
             String promptLivroId = "Digite o número do livro da lista: ";
-            int livroId = Prompts.promptInt(scanner, promptLivroId);
+            int livroId = promptInt(scanner, promptLivroId);
 
             Optional<Eletronico> livroSelecionado = livroDao.buscarLivroEletronicoPorId(livroId);
 

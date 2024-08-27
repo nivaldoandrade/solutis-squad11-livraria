@@ -5,9 +5,10 @@ import dao.impl.VendaDaoJDBC;
 import db.DB;
 import services.LivroService;
 import services.VendaService;
-import utils.Prompts;
 
 import java.util.Scanner;
+
+import static utils.Prompts.promptOpcaoComNumero;
 
 public class LivrariaVirtual {
     private final LivroService livroService;
@@ -24,11 +25,11 @@ public class LivrariaVirtual {
         DB.initializeDatabase();
         LivrariaVirtual livrariaVirtual = new LivrariaVirtual();
 
-        System.out.println("========= LIVRARIA =========");
         Scanner scanner = new Scanner(System.in);
 
-
         while (true) {
+            System.out.println("========= LIVRARIA VIRTUAL =========");
+
             int opcaoLivraria = escolherOpcaoLivraria(scanner);
 
             switch (opcaoLivraria) {
@@ -42,13 +43,13 @@ public class LivrariaVirtual {
                     livrariaVirtual.livroService.listarLivros(scanner);
                     break;
                 case 4:
-                    livrariaVirtual.vendaService.listarVendas();
+                    livrariaVirtual.vendaService.listarVendas(scanner);
+                    break;
+                case 5:
                     break;
             }
-
-            char opcaoSair = promptParaContinuar(scanner);
-
-            if(opcaoSair == 's') {
+            if( opcaoLivraria == 5) {
+                System.out.println();
                 System.out.println("Encerrando o sistema...");
                 break;
             }
@@ -58,29 +59,15 @@ public class LivrariaVirtual {
     }
 
     private static int escolherOpcaoLivraria(Scanner scanner) {
-        String promptInfo = "Opção da livraria: \n" +
+        String promptInfo = "Opções da livraria: \n" +
                 "1 - Cadastrar livro; \n" +
                 "2 - Realizar venda; \n" +
                 "3 - Listar livros; \n" +
-                "4 - Listar vendas.";
+                "4 - Listar vendas; \n" +
+                "5 - Sair.";
 
-        String promptOpcao = "Escolha a sua opção entre 1-4: ";
+        String promptOpcao = "Escolha a sua opção entre 1-5: ";
 
-        return Prompts.promptOpcaoComNumero(scanner,promptInfo, promptOpcao, 1, 4);
-    }
-
-    private static char promptParaContinuar(Scanner scanner) {
-        char opcao;
-
-        while(true) {
-            System.out.print("Deseja sair do sistema? (s ou n): ");
-            opcao = Character.toLowerCase(scanner.next().charAt(0)) ;
-
-            if( opcao == 'n' || opcao == 's') {
-                break;
-            }
-            System.out.print("Selecione S para sair ou N para continuar! ");
-        }
-        return opcao;
+        return promptOpcaoComNumero(scanner,promptInfo, promptOpcao, 1, 5);
     }
 }
