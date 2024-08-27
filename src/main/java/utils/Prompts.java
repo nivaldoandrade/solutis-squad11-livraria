@@ -65,7 +65,7 @@ public final class Prompts {
     ) {
         System.out.println(promptInfo);
         while (true) {
-            int opcao = Prompts.promptInt(scanner, promptOpcao);
+            int opcao = promptInt(scanner, promptOpcao);
 
             if(opcao >= inicio && opcao <= ultimo) {
                 return opcao;
@@ -73,5 +73,21 @@ public final class Prompts {
 
             System.out.print("Opção inválida! ");
         }
+    }
+
+    public static char promptParaContinuar(Scanner scanner, String prompt) {
+        char opcao;
+
+        while(true) {
+            System.out.print(prompt);
+            opcao = Character.toLowerCase(scanner.next().charAt(0));
+            scanner.nextLine();
+
+            if( opcao == 'n' || opcao == 's') {
+                break;
+            }
+            System.out.print("Selecione S para continuar ou N para cancelar! ");
+        }
+        return opcao;
     }
 }
